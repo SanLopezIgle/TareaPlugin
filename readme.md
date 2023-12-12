@@ -21,4 +21,19 @@ Esta función devuelve el contenido de la publicación y además muestra al fina
 
 Engancha la función `word_count` al hook `the_content`, permitiendo que el plugin cuente el total de palabras del contenido de las publicaciones.
 
+#### `add_filter('the_title', 'modificar_titulo', 10, 2);`
+
+Engancha la función `modificar_titulo` al hook `the_title`.
+
+#### `createTable`
+
+Crea una tabla de una base de datos con el numero de palabras que tiene la publicacion.
+
+#### `selectData`
+
+Función para obtener los datos de la tabla creada anteriormente.
+
+#### `insertData`
+
+Función que inserta en la tabla el numero de palabras del post.
 

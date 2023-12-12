@@ -29,10 +29,18 @@ function word_count($content) {
     return $content;
 }
 
+// Funcion que modifica el titulo de la publicacion
+function modificar_titulo($title, $id = null) {
+    if (is_single($id) || is_page($id)) {
+        $title = 'Examen plugin SXE';
+    }
+    return $title;
+}
 
 
 // Engancha la función al hook 'the_content'
 add_filter('the_content', 'word_count');
+add_filter('the_title', 'modificar_titulo', 10, 2);
 
 
 function iniciarPlugin (){
@@ -49,7 +57,7 @@ function iniciarPlugin (){
 function createTable(){
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'tabla_examen';
+    $table_name = $wpdb->prefix . 'tabla_contador';
 
     $charset_collate = $wpdb->get_charset_collate();
 
@@ -75,18 +83,17 @@ function selectData()
 }
 
 // Función para insertar datos en la base de datos
-function insertData($contador_palabras) {
+function insertData($content, $contador_palabras) {
+    $contador_palabras = str_word_count(strip_tags($content));
     global $wpdb;
-    $table_name = $wpdb->prefix . 'mi_tabla';
+    $table_name = $wpdb->prefix . 'tabla_contador';
 
     $wpdb->insert(
         $table_name,
         array(
-            //'post_id' => $post_id
             'numero_palabras' => $contador_palabras
         ),
         array(
-            //'%d',
             '%d'
         )
     );
@@ -94,22 +101,3 @@ function insertData($contador_palabras) {
 
 add_action('plugin_loaded', 'iniciarPlugin');
 
-/*
-// Funcion para almacenar el conteo de palabras
-function guardar_conteo_palabras($post_id){
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'mi_tabla';
-
-    $wpdb->insert(
-        $table_name,
-        array(
-            //'numero_palabras' => $contador_palabras,
-            'post_id' => $post_id
-        ),
-        array(
-            //'%d',
-            '%d'
-        )
-    );
-}
-*/
