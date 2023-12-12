@@ -1,6 +1,6 @@
-# Tarea Plugin
+# Examen Plugin
 
-Este plugin para WordPress tiene como objetivo reemplazar ciertas palabras dentro del contenido de las publicaciones por otras palabras definidas. Este es un primer paso en la construcción de un plugin más complejo que utilizará la base de datos de WordPress y permitirá la configuración desde el panel de administración.
+Este plugin para WordPress tiene como objetivo contar las palabras del contenido de una publicaciónertas palabras dentro del contenido de las publicaciones por otras palabras definidas.
 
 ## Uso
 
@@ -9,21 +9,16 @@ Este plugin para WordPress tiene como objetivo reemplazar ciertas palabras dentr
 
 ## Funcionamiento
 
-### Archivo Principal (`tarea-plugin.php`)
+### Archivo Principal (`tareaPlugin.php`)
 
 El archivo principal del plugin contiene las siguientes funciones:
 
-#### `word_replacer_get_words()`
+#### `word_count($content)`
 
-Esta función devuelve un array que mapea las palabras a reemplazar con sus sustitutos.
+Esta función devuelve el contenido de la publicación y además muestra al final el número de palabras que contiene.
 
-#### `word_replacer_replace_words($text)`
+#### `add_filter('the_content', 'word_count')`
 
-Esta función utiliza `str_ireplace()` para recorrer el contenido del post y reemplazar las palabras definidas en el array devuelto por `word_replacer_get_words()`.
-
-#### `add_filter('the_content', 'word_replacer_replace_words')`
-
-Engancha la función `word_replacer_replace_words` al hook `the_content`, permitiendo que el plugin realice los reemplazos de palabras en el contenido de las publicaciones.
+Engancha la función `word_count` al hook `the_content`, permitiendo que el plugin cuente el total de palabras del contenido de las publicaciones.
 
 
-Para personalizar las palabras a reemplazar, modifica el array devuelto por `word_replacer_get_words()` en el archivo `tarea-plugin.php`.
